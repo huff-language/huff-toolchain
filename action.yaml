@@ -1,0 +1,15 @@
+name: 'huff-toolchain'
+description: 'Install Huff'
+author: 'Andreas Bigger'
+branding:
+  icon: play-circle
+  color: black
+inputs:
+  version:
+    description: |
+      Huff version.
+      This version number has to match a released version of Huff.
+      Alternatively you can also specify `nightly` for the latest nightly build.
+runs:
+  using: node16
+  main: dist/index.js
