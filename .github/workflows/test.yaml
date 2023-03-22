@@ -14,8 +14,8 @@ jobs:
         with:
           version: nightly
 
-      - name: Install Huff
-        run: node ./dist/index.js
+      - name: Install Huff nightly
+        uses: ./ # use huff-toolchain current commit
         with:
           version: nightly
 
