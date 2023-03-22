@@ -20,7 +20,7 @@ jobs:
           submodules: recursive
 
       - name: Install Huff
-        uses: huff-language/huff-toolchain@v2
+        uses: huff-language/huff-toolchain@v3
         with:
           version: nightly
 
