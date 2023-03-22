@@ -19,5 +19,31 @@ jobs:
         with:
           version: nightly
 
-      - name: Install Dependencies
+      - name: Save huffc version in env for future comparison
+        run: echo "HUFF_VERSION=$(huffc -V)" >> $GITHUB_ENV
+
+      - name: Compile example
+        run: huffc examples/test.huff
+
+      - name: Install Huff with specific nightly
+        uses: ./ # use huff-toolchain current commit
+        with:
+          # This version was picked as it will output 0.3.0
+          # Nightly and next versions outputs >= 0.3.1
+          version: nightly-d4638680736ad104290bc7a28542c058a18debf4
+
+      - name: Save huffc version in env for future comparison
+        run: echo "HUFF_SPECIFIC_VERSION=$(huffc -V)" >> $GITHUB_ENV
+
+      # Compare huffc versions saved in GITHUB_ENV
+      # If they are equal, the specific nightly version was not installed
+      # In this case, print a message and fail the job by exiting
+      # Otherwise, it will continue to next step
+      - name: Compare version
+        if: ${{ env.HUFF_SPECIFIC_VERSION == env.HUFF_VERSION }}
+        run: |
+          echo "specific nightly version was not installed"
+          exit 1
+
+      - name: Compile example
         run: huffc examples/test.huff
